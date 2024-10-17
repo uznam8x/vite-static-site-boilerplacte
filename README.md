@@ -1,2 +1,2 @@
-# vite-static-site-boilerplacte
+# Vite static site boilerplacte
 vite + typescript + tailwindcss + nunjucks + alpinejs

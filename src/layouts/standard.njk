@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" name="tailwindcss" href="/src/tailwindcss.css"/>
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    {% block body %}
+      <main class="flex flex-1">{{ title }}</main>
+    {% endblock %}
+    <script type="module" src="/src/vendor.ts"></script>
+  </body>
+</html>
