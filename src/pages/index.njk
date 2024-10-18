@@ -1,5 +1,8 @@
 {% extends "layouts/standard.njk" %}
 
 {% block body %}
-  <main>{{ button({ text: "Button"}) }}</main>
+  <main>
+    {{ button({ children: "Button"}) }}
+    {{ progress({ value: 10 }) }}
+  </main>
 {% endblock %}
