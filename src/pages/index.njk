@@ -1,9 +1,5 @@
 {% extends "layouts/standard.njk" %}
+
 {% block body %}
-    <main class="flex justify-center bg-green-500">
-        <div x-data="{ isVisible: false }">
-            <div x-show="isVisible" x-cloak>index</div>
-            <button type="button" x-on:click="isVisible = !isVisible">toggle</button>
-        </div>
-    </main>
+  <main>{{ button({ text: "Button"}) }}</main>
 {% endblock %}
