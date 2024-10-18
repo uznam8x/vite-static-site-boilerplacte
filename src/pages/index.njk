@@ -1,5 +1,10 @@
 {% extends "layouts/standard.njk" %}
-
+{% block head %}
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+  />
+{% endblock %}
 {% block body %}
   <header class="sticky top-0 z-10 flex h-16 items-center border-b bg-white">
     <div class="container mx-auto flex items-center justify-between">
@@ -44,14 +49,37 @@
       <h2 id="components" class="mb-7 text-3xl font-bold text-gray-700">Components</h2>
       <section id="button">
         <h3 class="mb-7 text-2xl font-bold text-gray-600">Button</h3>
-        {{ button({ children: "Button"}) }}
+
+        <div>
+          <div role="tablist"></div>
+          <div role="tabpanel" class="relative mt-4 flex aspect-video items-center justify-center border">
+            {% call button({variant:'outline'}) %}
+              Button
+            {% endcall %}
+          </div>
+          {# <div role="tabpanel" class="relative mt-4 flex border"></div> #}
+        </div>
       </section>
       <hr class="my-12" />
       <section id="progress">
         <h3 class="mb-7 text-2xl font-bold text-gray-600">Progress</h3>
-        {{ progress({ value: 40 }) }}
+        {% call progress({value: 40}) %}{% endcall %}
       </section>
     </div>
   </main>
   <footer></footer>
+{% endblock %}
+
+{% block foot %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/twig.min.js"></script>
+  <script>
+    (function () {
+      const blocks = document.querySelectorAll('pre code');
+
+      Array.from(blocks).forEach(function (block) {
+        hljs.highlightBlock(block);
+      });
+    })();
+  </script>
 {% endblock %}

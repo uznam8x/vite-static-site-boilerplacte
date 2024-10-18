@@ -1,8 +1,6 @@
 {% macro button(props = {}) %}
-  {% set children = props.children or 'Button' %}
   {% set variant = props.variant or 'default' %}
   {% set size = props.size or 'default' %}
-
   {% set baseClass = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0' | safe %}
   {%
     set variantClasses = {
@@ -26,8 +24,8 @@
   {# 최종 클래스 적용 (twMerge 사용) #}
   <button
     type="button"
-    class="{{ baseClass ~ ' ' ~ variantClasses[variant] ~ ' ' ~ sizeClasses[size] ~ ' ' ~ props.class | twMerge | safe  }}"
+    class="{{ baseClass ~ ' ' ~ variantClasses[variant] ~ ' ' ~ sizeClasses[size] ~ ' ' ~ props.class | twMerge | safe }}"
   >
-    {{ children }}
+    {{ caller() }}
   </button>
 {% endmacro %}

@@ -9,12 +9,14 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: '/',
+  
   resolve: {
     alias: [{ find: '@src', replacement: path.resolve(__dirname, 'src') }],
   },
 
   build: {
     emptyOutDir: true,
+    outDir: 'build',
     rollupOptions: {},
   },
 
