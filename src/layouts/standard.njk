@@ -1,3 +1,5 @@
+{% from "components/ui/button.njk" import button %}
+{% from "components/ui/progress.njk" import progress %}
 <!doctype html>
 <html lang="ko">
   <head>
@@ -5,10 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" name="tailwindcss" href="/src/tailwindcss.css"/>
     <title>{{ title }}</title>
+    {% block head %}
+    {% endblock %}
   </head>
   <body>
     {% block body %}
-      <main class="flex flex-1">{{ title }}</main>
+      <main class="flex">Standard layout</main>
+    {% endblock %}
+    
+    {% block foot %}
     {% endblock %}
     <script type="module" src="/src/vendor.ts"></script>
   </body>

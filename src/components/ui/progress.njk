@@ -1,0 +1,9 @@
+{% macro progress(props = {}) %}
+  {% set value = props.value or 50 %}
+  <div class="{{ 'h-4 w-full overflow-hidden rounded-full bg-secondary' ~ props.class | twMerge }}">
+    {% set attrs %}
+        style="transform: translateX(-{{ 100 - value }}%);"
+    {% endset %}
+    <div class="h-full w-full bg-primary transition-all" {{ attrs | safe }}></div>
+  </div>
+{% endmacro %}
