@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && rm -rf dist && vite build && yarn run pretty-html && mv ./build ./dist",
+    "build": "tsc && rm -rf dist && vite build && yarn run pretty-html && mv ./prebuild ./dist",
     "preview": "vite preview",
-    "pretty-html": "prettier --log-level warn --write \"./build/**/*.html\""
+    "pretty-html": "prettier --log-level warn --write \"./prebuild/**/*.html\""
   },
   "devDependencies": {
     "@types/alpinejs": "^3.13.10",
