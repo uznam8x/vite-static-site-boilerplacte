@@ -1,16 +1,22 @@
 {% from "components/ui/button.njk" import button %}
 {% from "components/ui/progress.njk" import progress %}
+{% from "components/ui/input.njk" import input %}
+{% from "components/ui/popover.njk" import popover %}
+{% from "components/ui/textarea.njk" import textarea %}
+{% from "components/ui/switch.njk" import switch %}
+{% from "components/ui/dialog.njk" import dialog %}
+
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" name="tailwindcss" href="/src/tailwindcss.css" />
+    <link rel="stylesheet" href="/src/styles/tailwind.css" />
     <title>{{ title }}</title>
     {% block head %}
     {% endblock %}
   </head>
-  <body>
+  <body class="min-h-screen bg-background font-sans antialiased">
     {% block body %}
       <main class="flex">Standard layout</main>
     {% endblock %}
