@@ -1,4 +1,6 @@
 {% macro popover(props = {}) %}
+{% set slot = caller() | slots %}
+
   <div 
     x-data="{ open: false }"
     @keydown.escape.stop="open = false"
@@ -6,7 +8,7 @@
     class="relative inline-block"
   >
     {# Trigger #}
-    {{ props.trigger | safe }}
+    {{ slot.trigger | safe }}
 
     {# Content #}
     <div
@@ -21,7 +23,7 @@
       style="display: none; --radix-popover-content-width: 200px; --radix-popover-content-height: 200px;"
     >
       <div class="p-4 h-full overflow-y-auto">
-        {{ props.content | safe if props.content else caller() }}
+        {{ slot.default | safe }}
       </div>
     </div>
   </div>

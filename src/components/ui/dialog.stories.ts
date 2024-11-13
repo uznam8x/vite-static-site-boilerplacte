@@ -23,32 +23,17 @@ const meta = {
       ${buttonMacro}
       ${dialogMacro}
 
-      {% set trigger %}
+      {% call dialog() %}
+        {# Trigger #}
         {% call button({
           variant: "outline",
-          attrs: "@click='open = !open'"
+          attrs: "@click='open = !open' slot='trigger'"
         }) %}
           Open Dialog
         {% endcall %}
-      {% endset %}
 
-      {% call dialog({
-        trigger: trigger
-      }) %}
-        <div class="grid gap-4">
-          <div class="flex flex-col space-y-2">
-            <h2 class="text-lg font-semibold">다이얼로그 제목</h2>
-            <p class="text-sm text-muted-foreground">다이얼로그의 내용을 여기에 작성합니다.</p>
-          </div>
-          <div class="flex justify-end">
-            {% call button({
-              variant: "outline",
-              attrs: "@click='open = false'"
-            }) %}
-              닫기
-            {% endcall %}
-          </div>
-        </div>
+        {# Content #}
+        <p>다이얼로그의 본문 내용입니다.</p>
       {% endcall %}
     `;
 
@@ -74,38 +59,18 @@ export const Alert: Story = {
       ${buttonMacro}
       ${dialogMacro}
       
-      {% set trigger %}
+      {% call dialog() %}
+        {# Trigger #}
         {% call button({
           variant: "outline",
-          attrs: "@click='open = !open'"
+          attrs: "@click='open = !open' slot='trigger'"
         }) %}
           Open Dialog
         {% endcall %}
-      {% endset %}
 
-      {% call dialog({
-        trigger: trigger
-      }) %}
-        <div class="grid gap-4">
-          <div class="flex flex-col space-y-2">
-            <h2 class="text-lg font-semibold text-destructive">Are you sure?</h2>
-            <p class="text-sm text-muted-foreground">This action cannot be undone.</p>
-          </div>
-          <div class="flex justify-end gap-2">
-            {% call button({
-              variant: "outline",
-              attrs: "@click='open = false'"
-            }) %}
-              Cancel
-            {% endcall %}
-            {% call button({
-              variant: "destructive", 
-              attrs: "@click='open = false'"
-            }) %}
-              Delete
-            {% endcall %}
-          </div>
-        </div>
+        {# Content #}
+        <p>이 작업은 되돌릴 수 없습니다. 정말 진행하시겠습니까?</p>
+
       {% endcall %}
     `;
 

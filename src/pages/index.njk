@@ -122,20 +122,17 @@
 
                 <section id="popover" class="scroll-m-20">
                   <h2 class="text-2xl font-semibold tracking-tight">Popover</h2>
-                  <div class="my-6 w-full overflow-y-auto">
-                    <div class="relative rounded-lg border bg-card p-6 min-h-60">
-                      {% set triggerButton %}
+                  <div class="my-6 w-full ">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      
+
+                      {% call popover() %}
                         {% call button({
                           variant: "outline",
-                          attrs: "@click='open = !open' :aria-expanded='open'"
+                          attrs: "@click='open = !open' :aria-expanded='open' slot='trigger'"
                         }) %}
                           Open Menu
                         {% endcall %}
-                      {% endset %}
-
-                      {% call popover({
-                        trigger: triggerButton
-                      }) %}
                         <div class="flex flex-col space-y-1">
                           <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
                           <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Settings</button>
@@ -151,6 +148,27 @@
                   <div class="my-6 w-full overflow-y-auto">
                     <div class="relative rounded-lg border bg-card p-6">
                       {% call progress({value: 40}) %}{% endcall %}
+                    </div>
+                  </div>
+                </section>
+
+                <section id="dialog" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Dialog</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call dialog() %}
+                        {# Trigger #}
+                        {% call button({
+                          variant: "outline",
+                          attrs: "@click='open = !open' slot='trigger'"
+                        }) %}
+                          Open Dialog
+                        {% endcall %}
+
+                        {# Content #}
+                        <p>Are you sure you want to continue? This action cannot be undone.</p>
+                        
+                      {% endcall %}
                     </div>
                   </div>
                 </section>

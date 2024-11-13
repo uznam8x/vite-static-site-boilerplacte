@@ -1,15 +1,19 @@
 import nunjucks from 'nunjucks';
-import { twMerge } from 'tailwind-merge';
+import twMerge from './filters/twMerge';
+import slots from './filters/slots';
 
 // 웹 환경에서 사용할 수 있는 설정으로 변경
-const env = nunjucks.configure({ 
+const env = nunjucks.configure({
   autoescape: true,
   throwOnUndefined: false,
   trimBlocks: false,
-  lstripBlocks: false
+  lstripBlocks: false,
 });
 
-// 필터 추가
+// slots 필터 추가
+env.addFilter('slots', slots);
+
+// 기존 필터들
 env.addFilter('twMerge', twMerge);
 env.addFilter('safe', (str: string) => new nunjucks.runtime.SafeString(str));
 
@@ -23,3 +27,4 @@ export function renderNunjucksTemplate(template: string, context: TemplateContex
     throw error;
   }
 }
+

@@ -41,7 +41,7 @@ const preview: Preview = {
 
       window.alpineInitializedTimeout = setTimeout(() => {
         window.Alpine.start();
-      }, 500);
+      }, 2000);
       // Alpine이 아직 초기화되지 않았을 때만 실행
 
       return rendered;

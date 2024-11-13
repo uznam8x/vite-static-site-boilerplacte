@@ -5,7 +5,6 @@ import buttonMacro from './button.njk?raw';
 
 interface PopoverProps {
   trigger?: string;
-  content?: string;
 }
 
 const meta = {
@@ -16,31 +15,31 @@ const meta = {
       ${buttonMacro}
       ${popoverMacro}
       
-      {{ popover({
-        trigger: '
-          {% call button({
-            variant: "outline",
-            attrs: "@click=\'open = !open\' :aria-expanded=\'open\'"
-          }) %}
-            ${args.trigger || 'Open Popover'}
-          {% endcall %}
-        ',
-        content: content
-      }) }}
+      {% call popover() %}
+        {# Trigger #}
+        {% call button({
+          variant: "outline",
+          attrs: "@click='open = !open' slot='trigger'"
+        }) %}
+          Open Popover
+        {% endcall %}
+
+        {# Content #}
+        <div class="flex flex-col space-y-1">
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Settings</button>
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left text-red-500">Logout</button>
+        </div>
+      {% endcall %}
     `;
     
-    return renderNunjucksTemplate(template, { 
-      content: args.content
-    });
+    return renderNunjucksTemplate(template);
   },
-  argTypes: {
-    trigger: {
-      control: 'text',
-      description: '팝오버를 트리거하는 요소',
-    },
-    content: {
-      control: 'text',
-      description: '팝오버 내용',
+  parameters: {
+    docs: {
+      source: {
+        type: 'code',
+      },
     },
   },
 } as Meta<PopoverProps>;
@@ -48,42 +47,52 @@ const meta = {
 export default meta;
 type Story = StoryObj<PopoverProps>;
 
-export const Default: Story = {
-  args: {
-    trigger: 'Open Popover',
-    content: 'This is the popover content.',
-  },
-};
+export const Default: Story = {};
 
 export const WithCustomContent: Story = {
-  args: {
-    trigger: 'Settings',
-    content: `
-      <div class="flex flex-col space-y-1">
-        <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
-        <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Settings</button>
-        <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left text-red-500">Logout</button>
-      </div>
-    `,
-  },
-};
-
-export const WithSlotContent: Story = {
-  render: (args: PopoverProps) => {
+  render: () => {
     const template = `
       ${buttonMacro}
       ${popoverMacro}
       
-      {% call popover({
-        trigger: '
-          {% call button({
-            variant: "outline",
-            attrs: "@click=\'open = !open\' :aria-expanded=\'open\'"
-          }) %}
-            Menu
-          {% endcall %}
-        '
-      }) %}
+      {% call popover() %}
+        {# Trigger #}
+        {% call button({
+          variant: "outline",
+          attrs: "@click='open = !open' slot='trigger'"
+        }) %}
+          Settings
+        {% endcall %}
+
+        {# Content #}
+        <div class="flex flex-col space-y-1">
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Settings</button>
+          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left text-red-500">Logout</button>
+        </div>
+      {% endcall %}
+    `;
+    
+    return renderNunjucksTemplate(template);
+  }
+};
+
+export const WithMenuItems: Story = {
+  render: () => {
+    const template = `
+      ${buttonMacro}
+      ${popoverMacro}
+      
+      {% call popover() %}
+        {# Trigger #}
+        {% call button({
+          variant: "outline",
+          attrs: "@click='open = !open' slot='trigger'"
+        }) %}
+          Menu
+        {% endcall %}
+
+        {# Content #}
         <div class="flex flex-col space-y-1">
           <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Share</button>
           <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Export</button>
@@ -92,6 +101,6 @@ export const WithSlotContent: Story = {
       {% endcall %}
     `;
     
-    return renderNunjucksTemplate(template, {});
+    return renderNunjucksTemplate(template);
   }
 };

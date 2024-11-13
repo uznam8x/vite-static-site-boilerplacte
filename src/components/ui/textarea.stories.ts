@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { renderNunjucksTemplate } from '../../utils/nunjucks';
 import textareaMacro from './textarea.njk?raw';
+import buttonMacro from './button.njk?raw';
 
 interface TextareaProps {
   placeholder?: string;
@@ -17,9 +18,7 @@ const meta = {
     const template = `
       ${textareaMacro}
       
-      {% call textarea(props) %}
-        {{ content }}
-      {% endcall %}
+      {% call textarea(props) %} {{- content -}} {% endcall %}
     `;
     
     return renderNunjucksTemplate(template, { props: args, content: args.value });
@@ -103,7 +102,7 @@ export const WithLabel: Story = {
 export const WithButton: Story = {
   render: (args: TextareaProps) => {
     const template = `
-      {% from "components/ui/button.njk" import button %}
+      ${buttonMacro}
       ${textareaMacro}
       
       <div class="grid w-full gap-2">

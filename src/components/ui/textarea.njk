@@ -7,5 +7,5 @@
     {% if props.disabled %}disabled{% endif %}
     {% if props.rows %}rows="{{ props.rows }}"{% endif %}
     class="{{ (baseClass ~ ' ' ~ props.class) | twMerge | safe }}"
-  >{{ caller() | safe }}</textarea>
+  >{{- caller() | safe -}}</textarea>
 {% endmacro %} 
