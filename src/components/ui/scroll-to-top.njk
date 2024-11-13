@@ -1,0 +1,24 @@
+{% macro scrollToTop(props) %}
+  <button
+    x-data="{ 
+      show: false,
+      init() {
+        window.addEventListener('scroll', () => {
+          this.show = window.scrollY > 100;
+        });
+      }
+    }"
+    x-show="show"
+    x-transition:enter="transition-opacity duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity duration-300"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    class="{{ ('fixed bottom-4 right-4 z-50 ' + props.class) | twMerge | safe }}"
+    aria-label="Scroll to top"
+  >
+  {{ caller() | safe }}
+</button>
+{% endmacro %}

@@ -6,6 +6,7 @@
 {% from "components/ui/switch.njk" import switch %}
 {% from "components/ui/dialog.njk" import dialog %}
 {% from "components/ui/sheet.njk" import sheet %}
+{% from "components/ui/scroll-to-top.njk" import scrollToTop %}
 
 <!doctype html>
 <html lang="ko" class="light">
@@ -21,6 +22,26 @@
     {% block body %}
       <main class="flex">Standard layout</main>
     {% endblock %}
+
+    {% call scrollToTop({}) %}
+      <span
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md hover:bg-primary/90"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m18 15-6-6-6 6" />
+        </svg>
+      </span>
+    {% endcall %}
 
     {% block foot %}
     {% endblock %}
