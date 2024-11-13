@@ -1,0 +1,43 @@
+{% macro sheet(props) %}
+  {% set slot = caller() | slots %}
+  <div x-data="{ open: false }" class="relative z-50 h-auto w-auto">
+    {# Trigger #}
+    {{ slot.trigger | safe }}
+
+    <template x-teleport="body">
+      <div x-show="open" @keydown.window.escape="open=false" class="relative z-[99]">
+        {# Backdrop #}
+        <div
+          x-show="open"
+          x-transition.opacity.duration.400ms
+          @click="open = false"
+          class="fixed inset-0 bg-black/80"
+        ></div>
+
+        <div class="fixed inset-0 overflow-hidden">
+          <div class="absolute inset-0 overflow-hidden">
+            <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+              <div
+                x-show="open"
+                @click.away="open = false"
+                x-transition:enter="transform transition ease-in-out duration-300 sm:duration-300"
+                x-transition:enter-start="translate-x-full"
+                x-transition:enter-end="translate-x-0"
+                x-transition:leave="transform transition ease-in-out duration-300 sm:duration-300"
+                x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="translate-x-full"
+                class="w-screen max-w-md"
+              >
+                <div
+                  class="flex h-full flex-col overflow-y-scroll border-l border-neutral-100/70 bg-white py-5 shadow-lg"
+                >
+                  {{ slot.default | safe }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+{% endmacro %}

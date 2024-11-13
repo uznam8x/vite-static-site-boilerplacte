@@ -11,6 +11,7 @@ declare global {
   interface Window {
     Alpine: AlpineType;
     alpineInitializedTimeout: ReturnType<typeof setTimeout> | null;
+    isStorybook: boolean
   }
 }
 
@@ -19,6 +20,7 @@ window.Alpine = Alpine;
 Alpine.plugin(focus);
 Alpine.plugin(collapse);
 Alpine.plugin(intersect);
+window.isStorybook = true;
 window.alpineInitializedTimeout = null;
 
 const preview: Preview = {

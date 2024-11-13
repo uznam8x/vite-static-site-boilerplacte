@@ -3,7 +3,8 @@
  */
 import vituum from 'vituum';
 import nunjucks from '@vituum/vite-plugin-nunjucks';
-import { twMerge, slots } from './src/utils/nunjucks/filters';
+import { twMerge } from './src/utils/nunjucks/filters';
+import slots from './src/utils/nunjucks/filters/slots/server';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 

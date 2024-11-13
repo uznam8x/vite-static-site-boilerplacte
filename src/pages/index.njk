@@ -172,6 +172,37 @@
                     </div>
                   </div>
                 </section>
+
+                <section id="sheet" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Sheet</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call sheet({
+                        title: "Sheet Example"
+                      }) %}
+                        {# Trigger #}
+                        {% call button({
+                          variant: "outline",
+                          attrs: "@click='open = !open' slot='trigger'"
+                        }) %}
+                          Open Sheet
+                        {% endcall %}
+
+                        {# Content #}
+                        <div class="flex flex-col space-y-4 p-4">
+                          <div class="space-y-2">
+                            <h3 class="text-sm font-medium">Settings</h3>
+                            <div class="flex flex-col space-y-1">
+                              <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
+                              <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Preferences</button>
+                              <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left text-destructive">Logout</button>
+                            </div>
+                          </div>
+                        </div>
+                      {% endcall %}
+                    </div>
+                  </div>
+                </section>
               </div>
             </div>
           </div>

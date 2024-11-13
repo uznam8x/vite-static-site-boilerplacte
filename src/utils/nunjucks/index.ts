@@ -1,6 +1,6 @@
 import nunjucks from 'nunjucks';
 import twMerge from './filters/twMerge';
-import slots from './filters/slots';
+import slots from './filters/slots/browser';
 
 // 웹 환경에서 사용할 수 있는 설정으로 변경
 const env = nunjucks.configure({

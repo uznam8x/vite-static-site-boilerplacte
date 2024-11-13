@@ -20,6 +20,13 @@ const config: StorybookConfig = {
       ...config.optimizeDeps,
       include: [...(config.optimizeDeps?.include ?? []), 'alpinejs'],
     };
+
+    // 환경변수 설정
+    if (!config.define) {
+      config.define = {};
+    }
+    config.define['process.env.STORYBOOK'] = JSON.stringify('true');
+
     return config;
   },
 };
