@@ -19,7 +19,7 @@ const meta = {
       
       {{ input(props) }}
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args });
   },
   argTypes: {
@@ -105,13 +105,13 @@ export const WithLabel: Story = {
         {{ input(props) }}
       </div>
     `;
-    
-    return renderNunjucksTemplate(template, { 
+
+    return renderNunjucksTemplate(template, {
       props: {
         type: 'email',
         placeholder: 'Email address',
         ...args,
-      }
+      },
     });
   },
-}; 
+};

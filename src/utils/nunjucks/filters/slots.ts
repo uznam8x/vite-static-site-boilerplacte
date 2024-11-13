@@ -4,7 +4,7 @@ export default function (content: string) {
   try {
     // 브라우저 환경인지 확인
     const isBrowser = typeof window !== 'undefined' && window.DOMParser;
-    
+
     let root;
     if (isBrowser) {
       // 브라우저 환경(Storybook)에서는 DOMParser 사용

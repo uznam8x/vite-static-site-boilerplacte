@@ -10,7 +10,7 @@ interface PopoverProps {
 const meta = {
   title: 'Components/Popover',
   tags: ['autodocs'],
-  render: (args: PopoverProps) => {
+  render: () => {
     const template = `
       ${buttonMacro}
       ${popoverMacro}
@@ -32,7 +32,7 @@ const meta = {
         </div>
       {% endcall %}
     `;
-    
+
     return renderNunjucksTemplate(template);
   },
   parameters: {
@@ -72,9 +72,9 @@ export const WithCustomContent: Story = {
         </div>
       {% endcall %}
     `;
-    
+
     return renderNunjucksTemplate(template);
-  }
+  },
 };
 
 export const WithMenuItems: Story = {
@@ -100,7 +100,7 @@ export const WithMenuItems: Story = {
         </div>
       {% endcall %}
     `;
-    
+
     return renderNunjucksTemplate(template);
-  }
+  },
 };

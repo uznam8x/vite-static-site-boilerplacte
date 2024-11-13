@@ -11,10 +11,10 @@ interface DialogProps {
 const meta = {
   title: 'Components/Dialog',
   tags: ['autodocs'],
-  render: (args: DialogProps) => {
+  render: () => {
     const cleanup = () => {
       const existingDialogs = document.querySelectorAll('[data-dialog-container]');
-      existingDialogs.forEach(dialog => dialog.remove());
+      existingDialogs.forEach((dialog) => dialog.remove());
     };
 
     cleanup();

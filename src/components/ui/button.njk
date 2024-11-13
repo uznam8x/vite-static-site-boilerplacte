@@ -26,6 +26,6 @@
     class="{{ (baseClass ~ ' ' ~ variantClasses[variant] ~ ' ' ~ sizeClasses[size] ~ ' ' ~ props.class) | twMerge | safe }}"
     {{ props.attrs | safe if props.attrs }}
   >
-    {{ caller() }}
+    {{- caller() | safe - }}
   </button>
 {% endmacro %}

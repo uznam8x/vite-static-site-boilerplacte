@@ -20,7 +20,7 @@ const meta = {
         {{ content }}
       {% endcall %}
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args, content: args.content });
   },
   argTypes: {

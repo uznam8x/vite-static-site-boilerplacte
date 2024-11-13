@@ -20,7 +20,7 @@ const meta = {
       
       {% call textarea(props) %} {{- content -}} {% endcall %}
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args, content: args.value });
   },
   argTypes: {
@@ -89,12 +89,12 @@ export const WithLabel: Story = {
         <p class="text-sm text-muted-foreground">Your message will be copied to the support team.</p>
       </div>
     `;
-    
-    return renderNunjucksTemplate(template, { 
+
+    return renderNunjucksTemplate(template, {
       props: {
         placeholder: 'Type your message here.',
         ...args,
-      }
+      },
     });
   },
 };
@@ -110,12 +110,12 @@ export const WithButton: Story = {
         {% call button({}) %}Send message{% endcall %}
       </div>
     `;
-    
-    return renderNunjucksTemplate(template, { 
+
+    return renderNunjucksTemplate(template, {
       props: {
         placeholder: 'Type your message here.',
         ...args,
-      }
+      },
     });
   },
-}; 
+};

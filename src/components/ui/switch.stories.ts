@@ -17,7 +17,7 @@ const meta = {
       
       {{ switch(props) }}
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args });
   },
   argTypes: {
@@ -78,7 +78,7 @@ export const WithLabel: Story = {
         {{ switch(props) }}
       </div>
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args });
   },
 };
@@ -102,7 +102,7 @@ export const WithLabelAndDescription: Story = {
         {{ switch(props) }}
       </div>
     `;
-    
+
     return renderNunjucksTemplate(template, { props: args });
   },
 };
