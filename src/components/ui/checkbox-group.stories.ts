@@ -17,14 +17,26 @@ interface CheckboxGroupProps {
   disabled?: boolean;
 }
 
+interface CheckboxProps {
+  id?: string;
+  name?: string;
+  value?: string;
+  label?: string;
+  description?: string;
+  checked?: boolean;
+  disabled?: boolean;
+}
+
 const meta = {
-  title: 'Components/CheckboxGroup',
+  title: 'Components/Checkbox',
   tags: ['autodocs'],
-  render: (args: CheckboxGroupProps) => {
-    const template = `
+  render: (args: CheckboxProps | CheckboxGroupProps) => {
+    const template = 'items' in args ? `
       ${checkboxGroupMacro}
-      
       {{ checkboxGroup(props) }}
+    ` : `
+      ${checkboxGroupMacro}
+      {{ checkbox(props) }}
     `;
 
     return renderNunjucksTemplate(template, { props: args });
@@ -51,10 +63,10 @@ const meta = {
       description: '전체 비활성화 여부',
     },
   },
-} as Meta<CheckboxGroupProps>;
+} as Meta<CheckboxProps | CheckboxGroupProps>;
 
 export default meta;
-type Story = StoryObj<CheckboxGroupProps>;
+type Story = StoryObj<CheckboxProps | CheckboxGroupProps>;
 
 export const Default: Story = {
   args: {
@@ -106,7 +118,7 @@ export const WithDisabledItems: Story = {
   },
 };
 
-export const WithDescription: Story = {
+export const WithGroupDescription: Story = {
   args: {
     name: 'notifications',
     label: '알림 설정',
@@ -122,5 +134,44 @@ export const WithDescription: Story = {
         description: '계정 보안 관련 이메일을 받습니다.'
       },
     ],
+  },
+};
+
+export const SingleCheckbox: Story = {
+  args: {
+    id: 'terms',
+    name: 'terms',
+    value: 'accept',
+    label: '이용약관에 동의합니다',
+  },
+};
+
+export const SingleWithDescription: Story = {
+  args: {
+    id: 'terms-1',
+    name: 'terms-1',
+    value: 'accept',
+    label: '이용약관에 동의합니다',
+    description: '개인정보 처리방침을 포함한 이용약관에 동의합니다.',
+  },
+};
+
+export const Checked: Story = {
+  args: {
+    id: 'terms-2',
+    name: 'terms-2',
+    value: 'accept',
+    label: '이용약관에 동의합니다',
+    checked: true,
+  },
+};
+
+export const DisabledCheckbox: Story = {
+  args: {
+    id: 'terms-3',
+    name: 'terms-3',
+    value: 'accept',
+    label: '이용약관에 동의합니다',
+    disabled: true,
   },
 };

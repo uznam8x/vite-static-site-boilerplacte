@@ -45,8 +45,12 @@
               </div>
               <div class="flex flex-col space-y-3">
                 <h4 class="font-medium">Components</h4>
+                <a href="#accordion" class="text-sm text-muted-foreground hover:text-foreground">Accordion</a>
                 <a href="#button" class="text-sm text-muted-foreground hover:text-foreground">Button</a>
+                <a href="#checkbox-group" class="text-sm text-muted-foreground hover:text-foreground">CheckboxGroup</a>
                 <a href="#input" class="text-sm text-muted-foreground hover:text-foreground">Input</a>
+                <a href="#radio-group" class="text-sm text-muted-foreground hover:text-foreground">RadioGroup</a>
+                <a href="#tabs" class="text-sm text-muted-foreground hover:text-foreground">Tabs</a>
                 <a href="#textarea" class="text-sm text-muted-foreground hover:text-foreground">Textarea</a>
                 <a href="#switch" class="text-sm text-muted-foreground hover:text-foreground">Switch</a>
                 <a href="#popover" class="text-sm text-muted-foreground hover:text-foreground">Popover</a>
@@ -72,6 +76,29 @@
                   </p>
                 </section>
 
+                <section id="accordion" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Accordion</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call accordion() %}
+                        {% call accordionItem({ value: 'item-1' }) %}
+                          <div slot="trigger">
+                            <span class="font-medium">첫 번째 아이템</span>
+                          </div>
+                          <p>첫 번째 아이템의 내용입니다.</p>
+                        {% endcall %}
+
+                        {% call accordionItem({ value: 'item-2' }) %}
+                          <div slot="trigger">
+                            <span class="font-medium">두 번째 아이템</span>
+                          </div>
+                          <p>두 번째 아이템의 내용입니다.</p>
+                        {% endcall %}
+                      {% endcall %}
+                    </div>
+                  </div>
+                </section>
+
                 <section id="button" class="scroll-m-20">
                   <h2 class="text-2xl font-semibold tracking-tight">Button</h2>
                   <div class="my-6 w-full overflow-y-auto">
@@ -83,14 +110,125 @@
                   </div>
                 </section>
 
+                <section id="checkbox-group" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Checkbox & CheckboxGroup</h2>
+                  <div class="my-6 w-full overflow-y-auto space-y-6">
+                    {# 단일 체크박스 예제 #}
+                    <div class="relative rounded-lg border bg-card p-6">
+                      <h3 class="text-sm font-medium mb-4">단일 체크박스</h3>
+                      {{ checkbox({
+                        id: "terms",
+                        name: "terms",
+                        value: "accept",
+                        label: "이용약관에 동의합니다",
+                        description: "개인정보 처리방침을 포함한 이용약관에 동의합니다."
+                      }) }}
+                    </div>
+
+                    {# 체크박스 그룹 예제 #}
+                    <div class="relative rounded-lg border bg-card p-6">
+                      <h3 class="text-sm font-medium mb-4">체크박스 그룹</h3>
+                      {{ checkboxGroup({
+                        name: 'notifications',
+                        label: '알림 설정',
+                        items: [
+                          { 
+                            label: '이메일 알림', 
+                            value: 'email',
+                            description: '중요 알림을 이메일로 받습니다.'
+                          },
+                          { 
+                            label: '푸시 알림', 
+                            value: 'push',
+                            description: '앱 푸시 알림을 받습니다.'
+                          },
+                          { 
+                            label: 'SMS 알림', 
+                            value: 'sms',
+                            description: '긴급 알림을 SMS로 받습니다.',
+                            disabled: true
+                          }
+                        ],
+                        defaultValue: ['email', 'push']
+                      }) }}
+                    </div>
+                  </div>
+                </section>
+
                 <section id="input" class="scroll-m-20">
                   <h2 class="text-2xl font-semibold tracking-tight">Input</h2>
                   <div class="my-6 w-full overflow-y-auto">
                     <div class="relative rounded-lg border bg-card p-6">
                       {% call input({
-                        type: 'text',
-                        placeholder: 'Type something...'
+                        placeholder: 'Type your message here.'
                       }) %}{% endcall %}
+                    </div>
+                  </div>
+                </section>
+
+                <section id="radio-group" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">RadioGroup</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {{ radioGroup({
+                        name: 'plan',
+                        label: '구독 플랜',
+                        items: [
+                          { 
+                            label: '무료', 
+                            value: 'free',
+                            description: '기본적인 기능을 무료로 사용'
+                          },
+                          { 
+                            label: '프로', 
+                            value: 'pro',
+                            description: '모든 고급 기능 사용 가능'
+                          },
+                          { 
+                            label: '엔터프라이즈', 
+                            value: 'enterprise',
+                            description: '기업용 맞춤 서비스',
+                            disabled: true
+                          }
+                        ],
+                        defaultValue: 'pro'
+                      }) }}
+                    </div>
+                  </div>
+                </section>
+
+                <section id="tabs" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Tabs</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call tabs({ defaultValue: 'tab1' }) %}
+                        <div class="flex items-center" slot="list">
+                          {% call tabTrigger({ value: 'tab1' }) %}
+                            계정
+                          {% endcall %}
+                          {% call tabTrigger({ value: 'tab2' }) %}
+                            비밀번호
+                          {% endcall %}
+                        </div>
+
+                        {% call tabContent({ value: 'tab1' }) %}
+                          <div class="space-y-4">
+                            <h4 class="text-sm font-medium">계정 설정</h4>
+                            <p class="text-sm text-muted-foreground">
+                              계정과 관련된 설정을 변경할 수 있습니다.
+                            </p>
+                          </div>
+                        {% endcall %}
+
+                        {% call tabContent({ value: 'tab2' }) %}
+                          <div class="space-y-4">
+                            <h4 class="text-sm font-medium">비밀번호 변경</h4>
+                            <p class="text-sm text-muted-foreground">
+                              비밀번호를 변경할 수 있습니다.
+                            </p>
+                          </div>
+                        {% endcall %}
+                      {% endcall %}
                     </div>
                   </div>
                 </section>
