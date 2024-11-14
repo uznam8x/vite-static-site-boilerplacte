@@ -1,0 +1,136 @@
+{% macro pagination(props = {}) %}
+  {# Set default values #}
+  {% set current = props.current | default(1) %}
+  {% set total = props.total | default(1) %}
+  {% set baseUrl = props.baseUrl | default('/') %}
+  {% set count = props.count | default(5) %}  {# 표시할 페이지 숫자 개수 #}
+
+  {# Calculate page range #}
+  {% set halfCount = ((count - 1) / 2) | round(0, 'floor') %}
+  {% set startPage = current - halfCount %}
+  {% set endPage = current + halfCount %}
+
+  {# Adjust start and end page if they are out of bounds #}
+  {% if startPage < 1 %}
+    {% set startPage = 1 %}
+    {% set endPage = count if count < total else total %}
+  {% endif %}
+
+  {% if endPage > total %}
+    {% set endPage = total %}
+    {% set startPage = (total - count + 1) if (total - count + 1) > 0 else 1 %}
+  {% endif %}
+
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    class="mx-auto flex w-full justify-center"
+  >
+    <ul class="flex flex-row items-center gap-1">
+      {# Previous Button #}
+      <li>
+        {% if current > 1 %}
+          <a
+            href="{{ baseUrl }}?page={{ current - 1 }}"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            aria-label="Go to previous page"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+          </a>
+        {% else %}
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background/60 text-sm font-medium text-muted-foreground"
+            aria-disabled="true"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+          </span>
+        {% endif %}
+      </li>
+
+      {# First page if not in range #}
+      {% if startPage > 1 %}
+        <li>
+          <a
+            href="{{ baseUrl }}?page=1"
+            class="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            1
+          </a>
+        </li>
+        {% if startPage > 2 %}
+          <li>
+            <span class="px-2 text-muted-foreground">...</span>
+          </li>
+        {% endif %}
+      {% endif %}
+
+      {# Page Numbers #}
+      {% for page in range(startPage, endPage + 1) %}
+        {% if page == current %}
+          <li>
+            <span
+              class="inline-flex h-9 min-w-9 items-center justify-center rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground"
+              aria-current="page"
+            >
+              {{ page }}
+            </span>
+          </li>
+        {% else %}
+          <li>
+            <a
+              href="{{ baseUrl }}?page={{ page }}"
+              class="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              {{ page }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {# Last page if not in range #}
+      {% if endPage < total %}
+        {% if endPage < total - 1 %}
+          <li>
+            <span class="px-2 text-muted-foreground">...</span>
+          </li>
+        {% endif %}
+        <li>
+          <a
+            href="{{ baseUrl }}?page={{ total }}"
+            class="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            {{ total }}
+          </a>
+        </li>
+      {% endif %}
+
+      {# Next Button #}
+      <li>
+        {% if current < total %}
+          <a
+            href="{{ baseUrl }}?page={{ current + 1 }}"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            aria-label="Go to next page"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </a>
+        {% else %}
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background/60 text-sm font-medium text-muted-foreground"
+            aria-disabled="true"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </span>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+{% endmacro %} 

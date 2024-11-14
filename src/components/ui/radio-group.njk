@@ -1,0 +1,51 @@
+{% macro radioGroup(props = {}) %}
+  {# Set default values #}
+  {% set items = props.items | default([]) %}
+  {% set name = props.name | default('') %}
+  {% set defaultValue = props.defaultValue | default('') %}
+  {% set disabled = props.disabled | default(false) %}
+
+  <div 
+    role="radiogroup" 
+    class="grid gap-2" 
+    {% if props.label %}
+      aria-label="{{ props.label }}"
+    {% endif %}
+  >
+    {% for item in items %}
+      {% set isDisabled = disabled or item.disabled %}
+      <div class="group flex items-center space-x-2">
+        <div class="relative flex items-center justify-center">
+          <input
+            type="radio"
+            id="{{ name }}-{{ item.value }}"
+            name="{{ name }}"
+            value="{{- item.value -}}"
+            {% if item.value == defaultValue %}checked{% endif %}
+            {% if isDisabled %}disabled{% endif %}
+            aria-describedby="{{ name }}-{{ item.value }}-description"
+            class="h-4 w-4 appearance-none rounded-full ring-1 ring-slate-900 transition-colors checked:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:ring-slate-300"
+          />
+          <svg
+            class="pointer-events-none absolute h-2 w-2 fill-white opacity-0 group-has-[input:checked]:opacity-100"
+            viewBox="0 0 8 8"
+          >
+            <circle cx="4" cy="4" r="4" />
+          </svg>
+        </div>
+        <label 
+          for="{{ name }}-{{ item.value }}" 
+          class="flex flex-col group-has-[input:disabled]:cursor-not-allowed"
+        >
+          <span class="text-sm font-medium leading-none group-has-[input:disabled]:text-slate-300">{{- item.label -}}</span>
+          {% if item.description %}
+            <span 
+              id="{{ name }}-{{ item.value }}-description" 
+              class="text-sm text-muted-foreground group-has-[input:disabled]:text-slate-300"
+            >{{- item.description -}}</span>
+          {% endif %}
+        </label>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}

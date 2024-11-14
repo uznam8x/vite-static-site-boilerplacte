@@ -1,0 +1,60 @@
+{% macro accordion(props = {}) %}
+  <div 
+    x-data="{ 
+      selected: '{{ props.defaultValue | default('') }}',
+      isOpen(value) { 
+        return this.selected === value 
+      }
+    }" 
+    class="divide-y rounded-md border"
+  >
+    {{ caller() | safe }}
+  </div>
+{% endmacro %}
+
+{% macro accordionItem(props = {}) %}
+  {% set slot = caller() | slots %}
+  {% set value = props.value | default('') %}
+
+  <div 
+    class="group"
+    x-bind:data-state="isOpen('{{ value }}') ? 'open' : 'closed'"
+  >
+    <button
+      type="button"
+      class="flex w-full items-center justify-between p-4 text-left text-sm transition-all hover:underline"
+      aria-controls="content-{{ value }}"
+      x-bind:aria-expanded="isOpen('{{ value }}')"
+      @click="selected = isOpen('{{ value }}') ? '' : '{{ value }}'"
+    >
+      <div class="flex-1">
+        {{ slot.trigger | safe }}
+      </div>
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        class="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+    <div
+      id="content-{{ value }}"
+      class="overflow-hidden"
+      x-show="isOpen('{{ value }}')"
+      x-collapse
+      x-cloak
+    >
+      <div class="p-4 pt-0">
+        {{ slot.default | safe }}
+      </div>
+    </div>
+  </div>
+{% endmacro %} 
