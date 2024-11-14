@@ -1,0 +1,43 @@
+{% macro tabs(props = {}) %}
+  {% set slot = caller() | slots %}
+
+  <div
+    x-data="{ 
+      selected: '{{ props.defaultValue | default('') }}',
+      isSelected(value) { 
+        return this.selected === value 
+      }
+    }"
+    class="w-full"
+  >
+    {# Tab List #}
+    <div role="tablist" aria-label="tabs" class="flex h-10 items-center text-muted-foreground">
+      {{ slot.list | safe }}
+    </div>
+
+    {{ slot.default | safe }}
+  </div>
+{% endmacro %}
+
+{% macro tabTrigger(props = {}) %}
+  {% set value = props.value | default('') %}
+
+  <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    x-bind:aria-selected="isSelected('{{ value }}')"
+    @click="selected = '{{ value }}'"
+    class="inline-flex items-center justify-center whitespace-nowrap border-b-2 px-3 py-1.5 text-sm ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-b-2 data-[state=active]:border-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none"
+    x-bind:data-state="isSelected('{{ value }}') ? 'active' : 'inactive'"
+  >
+    {{ caller() | safe }}
+  </button>
+{% endmacro %}
+
+{% macro tabContent(props = {}) %}
+  {% set slot = caller() | slots %}
+  {% set value = props.value | default('') %}
+
+  <div role="tabpanel" x-show="isSelected('{{ value }}')" class="mt-4" x-cloak>{{ slot.default | safe }}</div>
+{% endmacro %}
