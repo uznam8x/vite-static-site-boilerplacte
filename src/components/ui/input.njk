@@ -2,11 +2,52 @@
   {% set type = props.type or 'text' %}
   {% set baseClass = 'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50' | safe %}
 
-  <input
-    type="{{ type }}"
-    {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
-    {% if props.value %}value="{{ props.value }}"{% endif %}
-    {% if props.disabled %}disabled{% endif %}
-    class="{{ (baseClass ~ ' ' ~ props.class) | twMerge | safe }}"
-  />
+  {% if type in ['date', 'time', 'datetime-local', 'month', 'week'] %}
+    {{ control(props) }}
+  {% else %}
+    <input
+      type="{{ type }}"
+      {% for key, value in props %}
+        {% if key not in ['type', 'class'] %}
+          {% if value === true %}
+            {{ key }}
+          {% else %}
+            {{- key -}}="{{- value -}}"
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      class="{{ (baseClass ~ ' ' ~ props.class) | twMerge | safe }}"
+    />
+  {% endif %}
+{% endmacro %}
+
+{% macro control(props = {}) %}
+  {% set type = props.type or 'text' %}
+
+  <div
+    x-data="{ 
+      value: '{{ props.value or '' }}'
+    }"
+    class="relative"
+  >
+    <div
+      type="button"
+      class="flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      {% if props.disabled %}disabled{% endif %}
+    >
+      <span
+        x-text="value ? value : '{{ props.placeholder }}'"
+        class="flex-1 text-left"
+        :class="!value && 'text-muted-foreground'"
+        >{{ props.placeholder }}</span
+      >
+    </div>
+    <input
+      type="{{ type }}"
+      x-ref="input"
+      x-model="value"
+      {% if props.disabled %}disabled{% endif %}
+      class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+    />
+  </div>
 {% endmacro %}
