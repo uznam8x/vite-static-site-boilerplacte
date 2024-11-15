@@ -1,0 +1,43 @@
+{% macro slider(props = {}) %}
+  <div
+    x-data="{ 
+      value: {{ props.value or props.min or 0 }},
+      min: {{ props.min or 0 }},
+      max: {{ props.max or 100 }},
+      step: {{ props.step or 1 }},
+      format: {{ props.format or '(value) => value' | safe }}
+    }"
+    class="relative flex w-full touch-none select-none items-center"
+    {% if props.disabled %}aria-disabled="true"{% endif %}
+  >
+    <div class="relative w-full h-2">
+      {# Track background #}
+      <div class="absolute h-2 w-full rounded-full bg-secondary"></div>
+      {# Active track #}
+      <div 
+        class="absolute h-2 rounded-full bg-primary" 
+        :style="{ width: `${((value - min) / (max - min)) * 100}%` }"
+      ></div>
+      {# Thumb #}
+      <div 
+        class="absolute left-0 -top-1.5 h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        :style="{ left: `calc(${((value - min) / (max - min)) * 100}% - 10px)` }"
+      ></div>
+    </div>
+    <input
+      type="range"
+      x-model="value"
+      :min="min"
+      :max="max"
+      :step="step"
+      {% if props.disabled %}disabled{% endif %}
+      class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+    />
+    {% if props.showValue %}
+      <div 
+        class="w-12 text-right text-sm text-muted-foreground ml-3"
+        x-text="format(value)"
+      ></div>
+    {% endif %}
+  </div>
+{% endmacro %} 
