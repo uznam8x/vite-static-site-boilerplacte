@@ -46,8 +46,10 @@
               <div class="flex flex-col space-y-3">
                 <h4 class="font-medium">Components</h4>
                 <a href="#accordion" class="text-sm text-muted-foreground hover:text-foreground">Accordion</a>
+                <a href="#alert" class="text-sm text-muted-foreground hover:text-foreground">Alert</a>
                 <a href="#button" class="text-sm text-muted-foreground hover:text-foreground">Button</a>
                 <a href="#checkbox-group" class="text-sm text-muted-foreground hover:text-foreground">CheckboxGroup</a>
+                <a href="#dropdown" class="text-sm text-muted-foreground hover:text-foreground">Dropdown</a>
                 <a href="#input" class="text-sm text-muted-foreground hover:text-foreground">Input</a>
                 <a href="#radio-group" class="text-sm text-muted-foreground hover:text-foreground">RadioGroup</a>
                 <a href="#tabs" class="text-sm text-muted-foreground hover:text-foreground">Tabs</a>
@@ -94,6 +96,31 @@
                           </div>
                           <p>두 번째 아이템의 내용입니다.</p>
                         {% endcall %}
+                      {% endcall %}
+                    </div>
+                  </div>
+                </section>
+
+                <section id="alert" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Alert</h2>
+                  <div class="my-6 w-full overflow-y-auto">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call alert() %}
+                        {# Trigger #}
+                        {% call button({
+                          variant: "destructive",
+                          attrs: "@click='open = true' slot='trigger'"
+                        }) %}
+                          계정 삭제
+                        {% endcall %}
+
+                        {# Title #}
+                        <div slot="title">정말 계정을 삭제하시겠습니까?</div>
+
+                        {# Description #}
+                        <div slot="description">
+                          이 작업은 되돌릴 수 없습니다. 계정이 영구적으로 삭제되며 모든 데이터가 제거됩니다.
+                        </div>
                       {% endcall %}
                     </div>
                   </div>
@@ -272,9 +299,12 @@
                           Open Menu
                         {% endcall %}
                         <div class="flex flex-col space-y-1">
-                          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Profile</button>
-                          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left">Settings</button>
-                          <button class="text-sm px-2 py-1 hover:bg-accent rounded-md text-left text-destructive">Logout</button>
+                          <p class="text-sm font-medium">계정 설정</p>
+                          <p class="text-sm text-muted-foreground whitespace-nowrap">프로필 및 계정 설정을 관리합니다.</p>
+                          <p class="text-sm font-medium mt-4">결제 정보</p>
+                          <p class="text-sm text-muted-foreground whitespace-nowrap">결제 수단과 청구 내역을 확인합니다.</p>
+                          <p class="text-sm font-medium mt-4">알림 설정</p>
+                          <p class="text-sm text-muted-foreground whitespace-nowrap">알림 및 메시지 수신 설정을 변경합니다.</p>
                         </div>
                       {% endcall %}
                     </div>
@@ -311,6 +341,52 @@
                   </div>
                 </section>
 
+                <section id="dropdown" class="scroll-m-20">
+                  <h2 class="text-2xl font-semibold tracking-tight">Dropdown</h2>
+                  <div class="my-6 w-full">
+                    <div class="relative rounded-lg border bg-card p-6">
+                      {% call dropdown() %}
+                        <button 
+                          slot="trigger"
+                          type="button"
+                          @click="toggle"
+                          :aria-expanded="open"
+                          class="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                        >
+                          <span>Options</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="ml-2 h-4 w-4 transition-transform duration-200"
+                            :class="{ 'rotate-180': open }"
+                          >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+
+                        <div class="py-1">
+                          <button class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground">
+                            프로필
+                          </button>
+                          <button class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground">
+                            설정
+                          </button>
+                          <button class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                            로그아웃
+                          </button>
+                        </div>
+                      {% endcall %}
+                    </div>
+                  </div>
+                </section>
+                
                 <section id="sheet" class="scroll-m-20">
                   <h2 class="text-2xl font-semibold tracking-tight">Sheet</h2>
                   <div class="my-6 w-full overflow-y-auto">
@@ -341,6 +417,8 @@
                     </div>
                   </div>
                 </section>
+
+                
               </div>
             </div>
           </div>

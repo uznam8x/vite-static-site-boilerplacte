@@ -1,0 +1,72 @@
+{% macro alert(props = {}) %}
+  {% set slot = caller() | slots %}
+
+  <div 
+    x-data="{ 
+      open: false,
+      close() { this.open = false }
+    }" 
+    @keydown.escape.stop="close"
+    class="relative"
+  >
+    {# Trigger #}
+    {{ slot.trigger | safe }}
+
+    <template x-teleport="body">
+      <div
+        x-show="open"
+        x-trap.inert.noscroll="open"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[99] flex items-center justify-center bg-black/80"
+        x-cloak
+      >
+        {# Content #}
+        <div
+          x-show="open"
+          x-transition:enter="ease-out duration-300"
+          x-transition:enter-start="opacity-0 scale-75"
+          x-transition:enter-end="opacity-100 scale-100"
+          x-transition:leave="ease-in duration-200"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-110"
+          class="relative w-full max-w-md rounded-lg bg-background p-6 shadow-lg sm:p-8"
+        >
+          {# Title #}
+          {% if slot.title %}
+            <h2 class="text-lg font-semibold">{{ slot.title | safe }}</h2>
+          {% endif %}
+
+          {# Description #}
+          {% if slot.description %}
+            <div class="mt-2 text-sm text-muted-foreground">
+              {{ slot.default | safe }}
+            </div>
+          {% endif %}
+
+          {# Actions #}
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              @click="close"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+            >
+              {{ props.cancelText or '취소' }}
+            </button>
+            <button
+              type="button"
+              @click="$dispatch('confirm'); close()"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+            >
+              {{ props.confirmText or '확인' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+{% endmacro %} 
